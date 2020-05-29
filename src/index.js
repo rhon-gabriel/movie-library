@@ -7,13 +7,11 @@ import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers";
-import { fetchMovies } from './actions'
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
-store.dispatch(fetchMovies());
-console.log('getState', store.getState())
+
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
