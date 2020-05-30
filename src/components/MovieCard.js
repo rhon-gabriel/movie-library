@@ -1,32 +1,38 @@
 import React from "react";
-import MovieInfoModal from './MovieInfoModal'
+import MovieInfoModal from "./MovieInfoModal";
 import { useDispatch, useSelector } from "react-redux";
-import {fetchMovie, handleModal } from '../actions/index'
+import { fetchMovie, handleModal } from "../actions/index";
 
-function MovieCard(props) {
-    const movies = props.movies
-    const modalState = useSelector((state) => state.moviesReducer.modalOpen);
-    const selectedMovie = useSelector((state) => state.moviesReducer.movie);
-    const dispatch = useDispatch()
-    const handleOpen = (id) => {
-        dispatch(fetchMovie(id))
-        dispatch(handleModal())
-    };
+function MovieCard() {
+  const movies = useSelector((state) => state.moviesReducer.movies);
 
-    const handleClose = () => {
-        dispatch(handleModal())
-    }
+  const dispatch = useDispatch();
+  const handleOpen = (id) => {
+    dispatch(fetchMovie(id));
+    dispatch(handleModal());
+  };
 
   return (
     <div>
-      <button onClick={() => handleOpen(movies.id)}>
-        <div style={{ width: 100, height: 100, backgroundColor: "pink" }}>
-          title: {movies.original_title}
-        </div>
-      </button>
-      <MovieInfoModal modalState={modalState} handleClose={handleClose} movie={selectedMovie} />
+      {movies &&
+        movies.map((item) => {
+          return (
+            <button onClick={() => handleOpen(item.id)}>
+              <div style={styles.card}>title: {item.original_title}</div>
+            </button>
+          );
+        })}
+      <MovieInfoModal />
     </div>
   );
 }
+
+const styles = {
+  card: {
+    width: 100,
+    height: 100,
+    backgroundColor: "pink",
+  },
+};
 
 export default MovieCard;

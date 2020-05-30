@@ -3,6 +3,8 @@ import {
   ADD_FETCHED_MOVIES,
   FETCH_MOVIES_ERROR,
   SELECTED_MOVIE,
+  SET_PAGE,
+  SET_TOTAL_PAGES,
   HANDLE_MODAL
 } from "./actionTypes";
 import axios from "axios";
@@ -20,6 +22,23 @@ const addFetchedMovies = (movies) => {
     type: ADD_FETCHED_MOVIES,
     payload: {
       movies: movies,
+    },
+  };
+};
+const setPage = (page) => {
+  return {
+    type: SET_PAGE,
+    payload: {
+      page: page,
+    },
+  };
+};
+
+const totalPages = (totalPages) => {
+  return {
+    type: SET_TOTAL_PAGES,
+    payload: {
+      totalPages: totalPages,
     },
   };
 };
@@ -42,13 +61,15 @@ const fetchSelectedMovie = (movie) => {
   };
 };
 
-export const fetchMovieList = () => {
+export const fetchMovieList = (pageNumber) => {
   return (dispatch) => {
     dispatch(fetchMoviesLoading);
-    axios.get(`${apiUrl}popular?api_key=${API_KEY}&page=1`)
+    axios.get(`${apiUrl}popular?api_key=${API_KEY}&page=${pageNumber}`)
       .then((res) => res.data)
       .then((data) => {
+        dispatch(setPage(data.page))
         dispatch(addFetchedMovies(data.results));
+        dispatch(totalPages(data.total_pages))
       })
       .catch((error) => {
         dispatch(fetchMoviesError(error))
@@ -75,6 +96,14 @@ export const handleModal = () => {
     type: HANDLE_MODAL,
   };
 };
+
+export const loadMore = (page, totalPages) => {
+  return (dispatch) => {
+      if (page < totalPages) {
+        dispatch(fetchMovieList(page + 1));
+      }
+  };
+}
 
 export default {
   fetchMovieList,
