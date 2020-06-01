@@ -28,7 +28,6 @@ export const Containter = styled.div`
 `;
 export const LeftBox = styled.div`
   margin: 10px;
-  text-align: justify;
   text-justify: inter-word;
   color: #ffffff;
   width: 70%;
@@ -49,6 +48,12 @@ export const RightBox = styled.div`
   width: 30%;
   @media (max-width: 800px) {
     width: 90%;
+  }
+`;
+
+export const Title = styled.div`
+  @media (max-width: 600px) {
+    width: 280px;
   }
 `;
 

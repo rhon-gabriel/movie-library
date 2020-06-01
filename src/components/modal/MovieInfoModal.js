@@ -12,6 +12,7 @@ import {
   LeftHeader,
   CircularBarContainer,
   TagContainer,
+  Title,
   P,
   QuotesContainer,
   Tagline,
@@ -43,7 +44,9 @@ export default function MovieInfoModal() {
         <Containter>
           <LeftBox>
             <LeftHeader>
-              <FirstTextLogo>{selectedMovie.title}</FirstTextLogo>
+              <Title>
+                <FirstTextLogo>{selectedMovie.title}</FirstTextLogo>
+              </Title>
               <CircularBarContainer>
                 <ProgressBar
                   text="User score"
