@@ -1,32 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { createStore, applyMiddleware, compose } from "redux";
-import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers";
 import { fetchMovieList } from "./actions";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import ProjectInfo from './components/projectInfo/ProjectInfo'
+import Root from "./Root";
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
 store.dispatch(fetchMovieList());
 
-ReactDOM.render(
-  <Provider store={store}>
-    <Router>
-      <React.StrictMode>
-        <Route exact path="/" component={App} />
-        <Route path="/project" component={ProjectInfo} />
-      </React.StrictMode>
-    </Router>
-  </Provider>,
-  document.getElementById("root")
-);
+ReactDOM.render(<Root store={store} />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
