@@ -8,17 +8,22 @@ import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers";
 import { fetchMovieList } from "./actions";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import ProjectInfo from './components/projectInfo/ProjectInfo'
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
-store.dispatch(fetchMovieList())
+store.dispatch(fetchMovieList());
 
 ReactDOM.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <Router>
+      <React.StrictMode>
+        <Route exact path="/" component={App} />
+        <Route path="/project" component={ProjectInfo} />
+      </React.StrictMode>
+    </Router>
   </Provider>,
   document.getElementById("root")
 );
