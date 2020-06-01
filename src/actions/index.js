@@ -63,7 +63,7 @@ const fetchSelectedMovie = (movie) => {
 
 export const fetchMovieList = (pageNumber) => {
   return (dispatch) => {
-    dispatch(fetchMoviesLoading);
+    dispatch(fetchMoviesLoading());
     axios.get(`${apiUrl}popular?api_key=${API_KEY}&page=${pageNumber}`)
       .then((res) => res.data)
       .then((data) => {
